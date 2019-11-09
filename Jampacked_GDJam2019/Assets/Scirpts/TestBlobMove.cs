@@ -6,6 +6,8 @@ public class TestBlobMove : MonoBehaviour
 {
     public int playerNum;
 
+    private float speed = 12.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +22,13 @@ public class TestBlobMove : MonoBehaviour
 
         if (playerNum == 1)
         {
-            verticalInput = Input.GetAxis("P1Vertical") * 10.0f * Time.deltaTime;
-            horizontalInput = Input.GetAxis("P1Horizontal") * 10.0f * Time.deltaTime;
+            verticalInput = Input.GetAxis("P1Vertical") * speed * Time.deltaTime;
+            horizontalInput = Input.GetAxis("P1Horizontal") * speed * Time.deltaTime;
         }
         else if (playerNum == 2)
         {
-            verticalInput = Input.GetAxis("P2Vertical") * 10.0f * Time.deltaTime;
-            horizontalInput = Input.GetAxis("P2Horizontal") * 10.0f * Time.deltaTime;
+            verticalInput = Input.GetAxis("P2Vertical") * speed * Time.deltaTime;
+            horizontalInput = Input.GetAxis("P2Horizontal") * speed * Time.deltaTime;
         }
 
         GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, -verticalInput);
