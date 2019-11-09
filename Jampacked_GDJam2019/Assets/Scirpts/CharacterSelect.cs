@@ -55,8 +55,7 @@ public class CharacterSelect : MonoBehaviour
                 playerCharacterSelections[i] = Instantiate(blobList[0]);
                 Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
 
-                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2 * i + 1) * 18f / 8f, -1.5f);
-                //playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (i * 6.0f), -1.5f);
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
             }
 
             if (Input.GetButtonDown(BButton) && playersStates[i] == PlayerReadyState.joined)
