@@ -32,7 +32,7 @@ public class TestBlobMove : MonoBehaviour
         }
 
         GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, -verticalInput);
-        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, 12.0f);
+        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, 6.0f);
 
         if (GetComponent<Rigidbody2D>().velocity.x <= 0)
         {
