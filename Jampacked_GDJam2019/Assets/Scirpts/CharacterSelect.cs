@@ -18,7 +18,11 @@ public class CharacterSelect : MonoBehaviour
 
     public GameObject[] playerCharacterSelections;
 
+    private int[] currentBlobIndexSelected;
     public static GameObject[] blobList;
+
+    private float[] controlStickTimers;
+    private float controlStickResetTime = 0.4f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +30,16 @@ public class CharacterSelect : MonoBehaviour
         blobList = Resources.LoadAll<GameObject>("Prefabs");
 
         playersStates = new PlayerReadyState[4];
+        currentBlobIndexSelected = new int[4];
+
+        controlStickTimers = new float[4];
 
         for (int i = 0; i < playersStates.Length; i++)
         {
             playersStates[i] = PlayerReadyState.notJoined;
             characterSelectPrompts[i].enabled = false;
+            currentBlobIndexSelected[i] = i;
+            controlStickTimers[i] = 0.0f;
         }
 
         playerCharacterSelections = new GameObject[4];
@@ -41,31 +50,114 @@ public class CharacterSelect : MonoBehaviour
     {
         for (int i = 0; i < playersStates.Length; i++)
         {
+            controlStickTimers[i] += Time.deltaTime;
+
             //get correct player number on the buttons
-            string AButton = "P" + (i + 1).ToString() + "A";
-            string BButton = "P" + (i + 1).ToString() + "B";
+            string AButtonName         = "P" + (i + 1).ToString() + "A";
+            string BButtonName         = "P" + (i + 1).ToString() + "B";
+            string StickVerticalName   = "P" + (i + 1).ToString() + "Vertical";
+            string StickHorizontalName = "P" + (i + 1).ToString() + "Horizontal";
 
-            if (Input.GetButtonDown(AButton) && playersStates[i] == PlayerReadyState.notJoined)
+            if (Input.GetButtonDown(AButtonName))
             {
-                buttonPrompts[i].enabled = false;
-                characterSelectPrompts[i].enabled = true;
-                playersStates[i] = PlayerReadyState.joined;
+                if (playersStates[i] == PlayerReadyState.notJoined)
+                {
+                    playersStates[i] = PlayerReadyState.joined;
 
+                    buttonPrompts[i].enabled = false;
+                    characterSelectPrompts[i].enabled = true;
 
-                playerCharacterSelections[i] = Instantiate(blobList[0]);
-                Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
+                    playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
+                    Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
 
-                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                    playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                }
+                else if (playersStates[i] == PlayerReadyState.joined)
+                {
+                    playersStates[i] = PlayerReadyState.ready;
+
+                    characterSelectPrompts[i].enabled = false;
+                }
             }
 
-            if (Input.GetButtonDown(BButton) && playersStates[i] == PlayerReadyState.joined)
-            {
-                characterSelectPrompts[i].enabled = false;
-                buttonPrompts[i].enabled = true;
-                playersStates[i] = PlayerReadyState.notJoined;
 
+
+            else if (Input.GetButtonDown(BButtonName))
+            {
+                if (playersStates[i] == PlayerReadyState.joined)
+                {
+                    playersStates[i] = PlayerReadyState.notJoined;
+
+                    characterSelectPrompts[i].enabled = false;
+                    buttonPrompts[i].enabled = true;
+
+                    Destroy(playerCharacterSelections[i]);
+                }
+                else if (playersStates[i] == PlayerReadyState.ready)
+                {
+                    playersStates[i] = PlayerReadyState.joined;
+
+                    characterSelectPrompts[i].enabled = true;
+                }
+            }
+
+            if (Input.GetAxis(StickHorizontalName) > 0.5f && playersStates[i] == PlayerReadyState.joined && controlStickTimers[i] > controlStickResetTime)
+            {
+                controlStickTimers[i] = 0.0f;
 
                 Destroy(playerCharacterSelections[i]);
+
+                bool isValid = false;
+                int selectedIndex = currentBlobIndexSelected[i];
+                while (!isValid)
+                {
+                    isValid = true;
+
+                    selectedIndex++;
+                    if (selectedIndex >= blobList.Length)
+                        selectedIndex = 0;
+
+                    for (int j = 0; j < currentBlobIndexSelected.Length; j++)
+                    {
+                        if (currentBlobIndexSelected[j] == selectedIndex)
+                            isValid = false;
+                    }
+                }
+
+                currentBlobIndexSelected[i] = selectedIndex;
+
+                playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
+                Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+            }
+            else if (Input.GetAxis(StickHorizontalName) < -0.5f && playersStates[i] == PlayerReadyState.joined && controlStickTimers[i] > controlStickResetTime)
+            {
+                controlStickTimers[i] = 0.0f;
+
+                Destroy(playerCharacterSelections[i]);
+
+                bool isValid = false;
+                int selectedIndex = currentBlobIndexSelected[i];
+                while (!isValid)
+                {
+                    isValid = true;
+
+                    selectedIndex--;
+                    if (selectedIndex < 0)
+                        selectedIndex = blobList.Length - 1;
+
+                    for (int j = 0; j < currentBlobIndexSelected.Length; j++)
+                    {
+                        if (currentBlobIndexSelected[j] == selectedIndex)
+                            isValid = false;
+                    }
+                }
+
+                currentBlobIndexSelected[i] = selectedIndex;
+
+                playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
+                Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
             }
         }
     }
