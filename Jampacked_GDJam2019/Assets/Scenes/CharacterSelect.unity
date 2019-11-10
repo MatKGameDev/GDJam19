@@ -467,6 +467,8 @@ MonoBehaviour:
   playerCharacterSelections: []
   giftPrefab: {fileID: 5232027615604060783, guid: aa6dcb517cfaaa34a977325bcb802fd5,
     type: 3}
+  crownPrefab: {fileID: 5232027615604060783, guid: ee987825ff38d8841b486197cf87da40,
+    type: 3}
 --- !u!4 &339924420
 Transform:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class CharacterSelect : MonoBehaviour
     private float controlStickResetTime = 0.4f;
 
     public GameObject giftPrefab;
+    public GameObject crownPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +71,8 @@ public class CharacterSelect : MonoBehaviour
             //this is jank but basically it automatically reactivates the control stick selection when the stick is at rest
             if ((Input.GetAxis(StickHorizontalName) < 0.5f && (Input.GetAxis(StickHorizontalName) > -0.5f)))
                 controlStickTimers[i] = 1.0f;
-
+             
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (Input.GetButtonDown(AButtonName))
             {
                 if (playersStates[i] == PlayerReadyState.notJoined)
@@ -235,8 +237,7 @@ public class CharacterSelect : MonoBehaviour
                     {
                         playerCharacterSelections[i].AddComponent<TestBlobMove>();
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().playerNum = i;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift = giftPrefab;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
+
                         DontDestroyOnLoad(playerCharacterSelections[i]);
                     }
                 }
@@ -244,6 +245,6 @@ public class CharacterSelect : MonoBehaviour
             }
         }
         else
-                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
+            pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
