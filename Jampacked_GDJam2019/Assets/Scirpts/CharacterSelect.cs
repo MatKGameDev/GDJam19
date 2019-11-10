@@ -14,6 +14,7 @@ public class CharacterSelect : MonoBehaviour
 
     private PlayerReadyState[] playersStates;
 
+    [SerializeField] private SpriteRenderer[] inactiveWindows;
     [SerializeField] private SpriteRenderer[] buttonPrompts;
     [SerializeField] private SpriteRenderer[] characterSelectPrompts;
     [SerializeField] private SpriteRenderer   pressStartPrompt;
@@ -72,8 +73,9 @@ public class CharacterSelect : MonoBehaviour
                 {
                     playersStates[i] = PlayerReadyState.joined;
 
-                    buttonPrompts[i].enabled = false;
+                    inactiveWindows[i].enabled = false;
                     characterSelectPrompts[i].enabled = true;
+                    buttonPrompts[i].enabled = false;
 
                     bool isValid = false;
                     int selectedIndex = currentBlobIndexSelected[i];
@@ -117,6 +119,7 @@ public class CharacterSelect : MonoBehaviour
                     currentBlobIndexSelected[i] = -1;
 
                     characterSelectPrompts[i].enabled = false;
+                    inactiveWindows[i].enabled = true;
                     buttonPrompts[i].enabled = true;
 
                     Destroy(playerCharacterSelections[i]);

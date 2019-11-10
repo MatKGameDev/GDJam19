@@ -343,11 +343,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c73d0325bb09083438f566d27e412431, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonPrompts:
+  inactiveWindows:
   - {fileID: 1473880653}
   - {fileID: 1903677919}
   - {fileID: 1498773035}
   - {fileID: 194966359}
+  buttonPrompts:
+  - {fileID: 1778365405}
+  - {fileID: 1370245277}
+  - {fileID: 1089139962}
+  - {fileID: 2038238706}
   characterSelectPrompts:
   - {fileID: 302723364}
   - {fileID: 1439886388}
@@ -1374,7 +1379,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960022469}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
