@@ -85,6 +85,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNum: 1
+  gift: {fileID: 5232027615604060783, guid: aa6dcb517cfaaa34a977325bcb802fd5, type: 3}
 --- !u!95 &1870261153350494422
 Animator:
   serializedVersion: 3
