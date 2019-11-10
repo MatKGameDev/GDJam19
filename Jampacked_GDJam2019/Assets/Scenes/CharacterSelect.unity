@@ -325,7 +325,7 @@ GameObject:
   - component: {fileID: 339924420}
   - component: {fileID: 339924419}
   m_Layer: 0
-  m_Name: scriptTester
+  m_Name: CharacterSelectScript
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
