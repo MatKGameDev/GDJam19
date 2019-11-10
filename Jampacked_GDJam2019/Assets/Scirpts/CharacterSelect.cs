@@ -213,6 +213,7 @@ public class CharacterSelect : MonoBehaviour
                         playerCharacterSelections[i].AddComponent<TestBlobMove>();
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().playerNum = i;
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().gift = giftPrefab;
+                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
                         DontDestroyOnLoad(playerCharacterSelections[i]);
                     }
                 }
