@@ -198,13 +198,22 @@ public class CharacterSelect : MonoBehaviour
             if (playersStates[i] == PlayerReadyState.ready)
                 numPlayersReady++;
         }
-
         //check if the game should start (start button is pressed and at least two players are ready)
         if (numPlayersReady >= 2)
         {
-            pressStartPrompt.enabled = true;
+            bool isAnyoneNotReady = false;
+            for (int i = 0; i < playersStates.Length; i++)
+            {
+                if (playersStates[i] == PlayerReadyState.joined)
+                    isAnyoneNotReady = true;
+            }
 
-            if (Input.GetButtonDown("Start"))
+            if (!isAnyoneNotReady)
+                pressStartPrompt.enabled = true;
+            else
+                pressStartPrompt.enabled = false;
+
+            if (Input.GetButtonDown("Start") && !isAnyoneNotReady)
             {
                 for (int i = 0; i < playersStates.Length; i++)
                 {
