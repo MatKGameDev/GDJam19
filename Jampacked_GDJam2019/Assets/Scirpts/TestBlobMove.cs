@@ -21,7 +21,8 @@ public class TestBlobMove : MonoBehaviour
 
         if (giftStarter == -1)
         {
-            giftStarter = Random.Range(0, 2);
+            //fix this based on player numbers entered
+            giftStarter = Random.Range(1, 3);
         }
 
         if (giftStarter == playerNum)
