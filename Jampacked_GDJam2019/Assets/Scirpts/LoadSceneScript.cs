@@ -8,6 +8,14 @@ public class LoadSceneScript : MonoBehaviour
     void Start()
     {
         Screen.fullScreen = true;
+        if (Screen.fullScreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+        }
+        else
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+        }
     }
 
     // Update is called once per frame
