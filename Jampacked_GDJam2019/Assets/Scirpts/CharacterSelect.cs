@@ -157,8 +157,7 @@ public class CharacterSelect : MonoBehaviour
 
                 playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
                 Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
-                playerCharacterSelections[i].transform.position +=
-                    new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
             }
             else if (Input.GetAxis(StickHorizontalName) < -0.5f && playersStates[i] == PlayerReadyState.joined &&
                      controlStickTimers[i] > controlStickResetTime)
@@ -198,13 +197,22 @@ public class CharacterSelect : MonoBehaviour
             if (playersStates[i] == PlayerReadyState.ready)
                 numPlayersReady++;
         }
-
         //check if the game should start (start button is pressed and at least two players are ready)
         if (numPlayersReady >= 2)
         {
-            pressStartPrompt.enabled = true;
+            bool isAnyoneNotReady = false;
+            for (int i = 0; i < playersStates.Length; i++)
+            {
+                if (playersStates[i] == PlayerReadyState.joined)
+                    isAnyoneNotReady = true;
+            }
 
-            if (Input.GetButtonDown("Start"))
+            if (!isAnyoneNotReady)
+                pressStartPrompt.enabled = true;
+            else
+                pressStartPrompt.enabled = false;
+
+            if (Input.GetButtonDown("Start") && !isAnyoneNotReady)
             {
                 for (int i = 0; i < playersStates.Length; i++)
                 {

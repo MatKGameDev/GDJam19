@@ -21,7 +21,14 @@ public class TestBlobMove : MonoBehaviour
 
         if (giftStarter == -1)
         {
-            giftStarter = Random.Range(0, 2);
+            //basically all this jank makes sure we only assign the gift to a player that actually is playing
+            List<int> playerNums = new List<int>();
+            GameObject[] blobs = GameObject.FindGameObjectsWithTag("Blob");
+            foreach (GameObject blob in blobs)
+                playerNums.Add(blob.GetComponent<TestBlobMove>().playerNum);
+
+            int randomIndex = Random.Range(0, playerNums.Count);
+            giftStarter = playerNums[randomIndex];
         }
 
         if (giftStarter == playerNum)
