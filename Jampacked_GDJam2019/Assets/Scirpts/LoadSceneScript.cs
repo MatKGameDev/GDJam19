@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlimeGenerator : MonoBehaviour
+public class LoadSceneScript : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+        Screen.fullScreen = true;
     }
 
     // Update is called once per frame
