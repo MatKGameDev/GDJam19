@@ -40,19 +40,29 @@ public class TestBlobMove : MonoBehaviour
         float verticalInput = 0.0f;
         float horizontalInput = 0.0f;
 
-        if (playerNum == 1)
+        if (playerNum == 0)
         {
             verticalInput = Input.GetAxis("P1Vertical") * speed * Time.deltaTime;
             horizontalInput = Input.GetAxis("P1Horizontal") * speed * Time.deltaTime;
         }
-        else if (playerNum == 2)
+        else if (playerNum == 1)
         {
             verticalInput = Input.GetAxis("P2Vertical") * speed * Time.deltaTime;
             horizontalInput = Input.GetAxis("P2Horizontal") * speed * Time.deltaTime;
         }
+        else if (playerNum == 2)
+        {
+            verticalInput = Input.GetAxis("P3Vertical") * speed * Time.deltaTime;
+            horizontalInput = Input.GetAxis("P3Horizontal") * speed * Time.deltaTime;
+        }
+        else if (playerNum == 3)
+        {
+            verticalInput = Input.GetAxis("P4Vertical") * speed * Time.deltaTime;
+            horizontalInput = Input.GetAxis("P4Horizontal") * speed * Time.deltaTime;
+        }
 
         GetComponent<Rigidbody2D>().velocity += new Vector2(horizontalInput, -verticalInput);
-        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, 6.0f);
+        GetComponent<Rigidbody2D>().velocity = Vector2.ClampMagnitude(GetComponent<Rigidbody2D>().velocity, 10.0f);
 
         if (GetComponent<Rigidbody2D>().velocity.x <= 0)
         {
@@ -75,6 +85,7 @@ public class TestBlobMove : MonoBehaviour
                 if (transform.GetChild(i).tag == "Gift")
                 {
                     collision.gameObject.GetComponent<TestBlobMove>().giftGivenTo = true;
+                    transform.GetChild(i).localScale = new Vector3(0.3f, 0.3f, 0.3f);
                     transform.GetChild(i).SetParent(collision.gameObject.transform);
                 }
             }
