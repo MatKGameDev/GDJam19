@@ -108,7 +108,7 @@ public class Gameplay : MonoBehaviour
 
                 GameObject[] blobs = GameObject.FindGameObjectsWithTag("Blob");
                 foreach (GameObject blob in blobs)
-                    blob.GetComponent<Rigidbody2D>().velocity = new Vector2(0.001f, 0.001f);
+                    blob.GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(2.0f, 4.0f), Random.Range(2.0f, 4.0f));
             }
         }
         else if (isGameFinished) //game is finished

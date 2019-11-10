@@ -18,7 +18,7 @@ public class TestBlobMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 0.0f);
+        GetComponent<Rigidbody2D>().velocity = new Vector2(Random.Range(2.0f, 4.0f), Random.Range(2.0f, 4.0f));
         anim = GetComponent<Animator>();
     }
 

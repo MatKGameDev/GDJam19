@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class controllerMovementMenu : MonoBehaviour
 {
-    string aButton = "P1A";
-    string verticalController = "P1Vertical";
+    string aButton = "AButton";
+    string verticalController = "Vertical";
     int cursorPlace = 0;
     public Text[] buttons = new Text[3];
     public GameObject MenuPanel;
