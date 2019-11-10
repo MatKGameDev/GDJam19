@@ -6,8 +6,6 @@ public class LttieBabyFollow : MonoBehaviour
 {
     private Vector2 targetPos = new Vector2(0, 0);
 
-    public float bombTimer = 30f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +24,5 @@ public class LttieBabyFollow : MonoBehaviour
         Vector2 toTargetPos = targetPos - (Vector2) transform.localPosition;
 
         transform.Translate(toTargetPos * 0.9f * Time.deltaTime * 10.0f);
-
-        bombTimer -= Time.deltaTime;
-
-        if (bombTimer <= 0f)
-        {
-            Destroy(transform.parent.gameObject);
-        }
     }
 }

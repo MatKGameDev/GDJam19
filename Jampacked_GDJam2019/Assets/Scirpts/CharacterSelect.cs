@@ -237,11 +237,6 @@ public class CharacterSelect : MonoBehaviour
                     {
                         playerCharacterSelections[i].AddComponent<TestBlobMove>();
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().playerNum = i;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift = giftPrefab;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
-
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().crown = crownPrefab;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().crown.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
 
                         DontDestroyOnLoad(playerCharacterSelections[i]);
                     }
@@ -250,6 +245,6 @@ public class CharacterSelect : MonoBehaviour
             }
         }
         else
-                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
+            pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
