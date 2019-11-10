@@ -9,7 +9,7 @@ public class TestBlobMove : MonoBehaviour
     public bool isActive = true;
     public bool isCarryingBomb;
 
-    private bool giftGivenTo = false;
+    public bool giftGivenTo = false;
     private float speed = 12.0f;
     private Animator anim;
 
