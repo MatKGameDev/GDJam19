@@ -9,10 +9,24 @@ public class TestBlobMove : MonoBehaviour
     private bool giftGivenTo = false;
     private float speed = 12.0f;
 
+    private static int giftStarter = -1;
+    public GameObject gift;
+
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(4.0f, 3.0f);
+
+        if (giftStarter == -1)
+        {
+            giftStarter = Random.Range(1, 5);
+        }
+
+        if (giftStarter == playerNum)
+        {
+            var g = Instantiate(gift);
+            g.transform.parent = gameObject.transform;
+        }
     }
 
     // Update is called once per frame
