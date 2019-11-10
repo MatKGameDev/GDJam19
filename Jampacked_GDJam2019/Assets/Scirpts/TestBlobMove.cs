@@ -29,8 +29,8 @@ public class TestBlobMove : MonoBehaviour
         {
             giftGivenTo = false;
 
-            float verticalInput = 0.0f;
             float horizontalInput = 0.0f;
+            float verticalInput = 0.0f;
 
             if (playerNum == 0)
             {
@@ -86,9 +86,13 @@ public class TestBlobMove : MonoBehaviour
             {
                 if (transform.GetChild(i).tag == "Gift")
                 {
+                    var arr = GameObject.FindGameObjectsWithTag("Gift");
                     collision.gameObject.GetComponent<TestBlobMove>().giftGivenTo = true;
-                    transform.GetChild(i).localScale = new Vector3(0.3f, 0.3f, 0.3f);
-                    transform.GetChild(i).SetParent(collision.gameObject.transform);
+                    foreach (GameObject obj in arr)
+                    {
+                        obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+                        obj.transform.SetParent(collision.gameObject.transform);
+                    }
                 }
             }
         }
