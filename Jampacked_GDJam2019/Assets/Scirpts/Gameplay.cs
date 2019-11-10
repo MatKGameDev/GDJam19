@@ -30,7 +30,7 @@ public class Gameplay : MonoBehaviour
             {
                 if (!blobs[i].GetComponent<TestBlobMove>().isActive)
                 {
-                    blobs[i].transform.position = new Vector3(-6.0f + (6.0f * i), 8.0f, 3.0f);
+                    blobs[i].transform.position = new Vector3(-6.0f + (6.0f * i), 4.0f, 3.0f);
                     inactiveBlobs++;
                 }
                 else //blob is active
@@ -49,6 +49,7 @@ public class Gameplay : MonoBehaviour
 
             isRoundStart = false;
         }
+
         bombTimer -= Time.deltaTime;
 
         if (bombTimer <= 0f)
