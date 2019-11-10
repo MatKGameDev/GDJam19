@@ -18,7 +18,7 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] private SpriteRenderer[] buttonPrompts;
     [SerializeField] private SpriteRenderer[] characterSelectPrompts;
     [SerializeField] private SpriteRenderer[] playerTags;
-    [SerializeField] private SpriteRenderer   pressStartPrompt;
+    [SerializeField] private GameObject  pressStartPrompt;
 
     public GameObject[] playerCharacterSelections;
 
@@ -40,6 +40,7 @@ public class CharacterSelect : MonoBehaviour
         currentBlobIndexSelected = new int[4];
 
         controlStickTimers = new float[4];
+
 
         for (int i = 0; i < playersStates.Length; i++)
         {
@@ -220,9 +221,11 @@ public class CharacterSelect : MonoBehaviour
             }
 
             if (!isAnyoneNotReady)
-                pressStartPrompt.enabled = true;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = true;
+
             else
-                pressStartPrompt.enabled = false;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
+
 
             if (Input.GetButtonDown("Start") && !isAnyoneNotReady)
             {
@@ -241,6 +244,6 @@ public class CharacterSelect : MonoBehaviour
             }
         }
         else
-            pressStartPrompt.enabled = false;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
