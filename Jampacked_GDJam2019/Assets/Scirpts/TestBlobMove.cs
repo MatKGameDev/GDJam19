@@ -19,7 +19,7 @@ public class TestBlobMove : MonoBehaviour
 
         if (giftStarter == -1)
         {
-            giftStarter = Random.Range(1, 5);
+            giftStarter = Random.Range(0, 2);
         }
 
         if (giftStarter == playerNum)
