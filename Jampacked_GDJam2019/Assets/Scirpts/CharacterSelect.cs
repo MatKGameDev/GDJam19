@@ -38,7 +38,7 @@ public class CharacterSelect : MonoBehaviour
         {
             playersStates[i] = PlayerReadyState.notJoined;
             characterSelectPrompts[i].enabled = false;
-            currentBlobIndexSelected[i] = i;
+            currentBlobIndexSelected[i] = -1;
             controlStickTimers[i] = 0.0f;
         }
 
@@ -51,12 +51,16 @@ public class CharacterSelect : MonoBehaviour
         for (int i = 0; i < playersStates.Length; i++)
         {
             controlStickTimers[i] += Time.deltaTime;
-
+            
             //get correct player number on the buttons
             string AButtonName         = "P" + (i + 1).ToString() + "A";
             string BButtonName         = "P" + (i + 1).ToString() + "B";
             string StickVerticalName   = "P" + (i + 1).ToString() + "Vertical";
             string StickHorizontalName = "P" + (i + 1).ToString() + "Horizontal";
+
+            //this is jank but basically it automatically reactivates the control stick selection when the stick is at rest
+            if ((Input.GetAxis(StickHorizontalName) < 0.5f && (Input.GetAxis(StickHorizontalName) > -0.5f)))
+                controlStickTimers[i] = 1.0f;
 
             if (Input.GetButtonDown(AButtonName))
             {
@@ -66,6 +70,25 @@ public class CharacterSelect : MonoBehaviour
 
                     buttonPrompts[i].enabled = false;
                     characterSelectPrompts[i].enabled = true;
+
+                    bool isValid = false;
+                    int selectedIndex = currentBlobIndexSelected[i];
+                    while (!isValid)
+                    {
+                        isValid = true;
+
+                        selectedIndex++;
+                        if (selectedIndex >= blobList.Length)
+                            selectedIndex = 0;
+
+                        for (int j = 0; j < currentBlobIndexSelected.Length; j++)
+                        {
+                            if (currentBlobIndexSelected[j] == selectedIndex)
+                                isValid = false;
+                        }
+                    }
+
+                    currentBlobIndexSelected[i] = selectedIndex;
 
                     playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
                     Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
@@ -80,13 +103,13 @@ public class CharacterSelect : MonoBehaviour
                 }
             }
 
-
-
             else if (Input.GetButtonDown(BButtonName))
             {
                 if (playersStates[i] == PlayerReadyState.joined)
                 {
                     playersStates[i] = PlayerReadyState.notJoined;
+
+                    currentBlobIndexSelected[i] = -1;
 
                     characterSelectPrompts[i].enabled = false;
                     buttonPrompts[i].enabled = true;
