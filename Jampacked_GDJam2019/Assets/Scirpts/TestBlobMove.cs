@@ -8,7 +8,6 @@ public class TestBlobMove : MonoBehaviour
 
     private bool giftGivenTo = false;
     private float speed = 12.0f;
-    private Animator anim;
 
     private static int giftStarter = -1;
     public GameObject gift;
@@ -17,7 +16,6 @@ public class TestBlobMove : MonoBehaviour
     void Start()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(4.0f, 3.0f);
-        anim = GetComponent<Animator>();
 
         if (giftStarter == -1)
         {
@@ -34,7 +32,6 @@ public class TestBlobMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         giftGivenTo = false;
         
         float verticalInput = 0.0f;
@@ -62,11 +59,9 @@ public class TestBlobMove : MonoBehaviour
         {
             GetComponentInChildren<SpriteRenderer>().flipX = false;
         }
-
-        setAnimationState();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Blob" && !giftGivenTo)
         {
@@ -81,24 +76,6 @@ public class TestBlobMove : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        anim.SetBool("isColliding", true);
-    }
-
-    void setAnimationState()
-    {
-        if (GetComponent<Rigidbody2D>().velocity.magnitude <= 1.0f)
-        {
-            anim.SetBool("isIdle", true);
-            anim.SetBool("isMoving", false);
-            anim.SetBool("isColliding", false);
-        }
-        else
-        {
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isMoving", true);
-            anim.SetBool("isColliding", false);
-        }
-    }
+    //add states and shit for animation purposes//
+    // - Marcus
 }
