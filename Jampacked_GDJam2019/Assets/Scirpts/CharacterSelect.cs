@@ -125,7 +125,7 @@ public class CharacterSelect : MonoBehaviour
 
                     characterSelectPrompts[i].enabled = false;
                     characterSelectPrompts[i].GetComponent<Animator>().SetBool("isMoving", true);
-                    playerTags[i].enabled = true;
+                    playerTags[i].enabled = false;
                     inactiveWindows[i].enabled = true;
                     buttonPrompts[i].enabled = true;
 
