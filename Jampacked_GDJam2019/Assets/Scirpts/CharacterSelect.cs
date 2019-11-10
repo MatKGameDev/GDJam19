@@ -18,7 +18,7 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] private SpriteRenderer[] buttonPrompts;
     [SerializeField] private SpriteRenderer[] characterSelectPrompts;
     [SerializeField] private SpriteRenderer[] playerTags;
-    [SerializeField] private SpriteRenderer   pressStartPrompt;
+    [SerializeField] private GameObject  pressStartPrompt;
 
     public GameObject[] playerCharacterSelections;
 
@@ -29,6 +29,7 @@ public class CharacterSelect : MonoBehaviour
     private float controlStickResetTime = 0.4f;
 
     public GameObject giftPrefab;
+    public GameObject crownPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -40,6 +41,7 @@ public class CharacterSelect : MonoBehaviour
         currentBlobIndexSelected = new int[4];
 
         controlStickTimers = new float[4];
+
 
         for (int i = 0; i < playersStates.Length; i++)
         {
@@ -69,7 +71,8 @@ public class CharacterSelect : MonoBehaviour
             //this is jank but basically it automatically reactivates the control stick selection when the stick is at rest
             if ((Input.GetAxis(StickHorizontalName) < 0.5f && (Input.GetAxis(StickHorizontalName) > -0.5f)))
                 controlStickTimers[i] = 1.0f;
-
+             
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (Input.GetButtonDown(AButtonName))
             {
                 if (playersStates[i] == PlayerReadyState.notJoined)
@@ -220,9 +223,11 @@ public class CharacterSelect : MonoBehaviour
             }
 
             if (!isAnyoneNotReady)
-                pressStartPrompt.enabled = true;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = true;
+
             else
-                pressStartPrompt.enabled = false;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
+
 
             if (Input.GetButtonDown("Start") && !isAnyoneNotReady)
             {
@@ -232,8 +237,7 @@ public class CharacterSelect : MonoBehaviour
                     {
                         playerCharacterSelections[i].AddComponent<TestBlobMove>();
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().playerNum = i;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift = giftPrefab;
-                        playerCharacterSelections[i].GetComponent<TestBlobMove>().gift.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
+
                         DontDestroyOnLoad(playerCharacterSelections[i]);
                     }
                 }
@@ -241,6 +245,6 @@ public class CharacterSelect : MonoBehaviour
             }
         }
         else
-            pressStartPrompt.enabled = false;
+            pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
