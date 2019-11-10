@@ -25,7 +25,7 @@ public class LttieBabyFollow : MonoBehaviour
 
         Vector2 toTargetPos = targetPos - (Vector2) transform.localPosition;
 
-        transform.Translate(toTargetPos * 0.9f * Time.deltaTime * 10f);
+        transform.Translate(toTargetPos * 0.9f * Time.deltaTime * 10.0f);
 
         bombTimer -= Time.deltaTime;
 

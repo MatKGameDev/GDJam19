@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2524752381855871249}
   - component: {fileID: 3886686689213319784}
-  - component: {fileID: 7632682812103513862}
+  - component: {fileID: 2660200430633649001}
   m_Layer: 0
-  m_Name: Gift
+  m_Name: Crown
   m_TagString: Gift
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,8 +69,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 96127e1c623c83941adf30ff3e30ea75, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: a66fe822bc1cff04596e43a2d71726ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7632682812103513862
+--- !u!114 &2660200430633649001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,7 +90,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 5232027615604060783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba8dfb7200f47e74aa90e97bee43bce5, type: 3}
+  m_Script: {fileID: 11500000, guid: 1ef870ef13b971f469533413c2e07051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bombTimer: 30

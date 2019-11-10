@@ -12,6 +12,7 @@ public class TestBlobMove : MonoBehaviour
 
     private static int giftStarter = -1;
     public GameObject gift;
+    public GameObject crown;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +35,9 @@ public class TestBlobMove : MonoBehaviour
         if (giftStarter == playerNum)
         {
             var g = Instantiate(gift);
+            var j = Instantiate(crown);
             g.transform.parent = gameObject.transform;
+            j.transform.parent = gameObject.transform;
         }
     }
 

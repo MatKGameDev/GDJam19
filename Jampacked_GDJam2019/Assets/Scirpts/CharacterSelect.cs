@@ -14,9 +14,11 @@ public class CharacterSelect : MonoBehaviour
 
     private PlayerReadyState[] playersStates;
 
+    [SerializeField] private SpriteRenderer[] inactiveWindows;
     [SerializeField] private SpriteRenderer[] buttonPrompts;
     [SerializeField] private SpriteRenderer[] characterSelectPrompts;
-    [SerializeField] private SpriteRenderer   pressStartPrompt;
+    [SerializeField] private SpriteRenderer[] playerTags;
+    [SerializeField] private GameObject  pressStartPrompt;
 
     public GameObject[] playerCharacterSelections;
 
@@ -27,10 +29,12 @@ public class CharacterSelect : MonoBehaviour
     private float controlStickResetTime = 0.4f;
 
     public GameObject giftPrefab;
+    public GameObject crownPrefab;
 
     // Start is called before the first frame update
     void Start()
     {
+
         blobList = Resources.LoadAll<GameObject>("Prefabs");
 
         playersStates = new PlayerReadyState[4];
@@ -38,10 +42,12 @@ public class CharacterSelect : MonoBehaviour
 
         controlStickTimers = new float[4];
 
+
         for (int i = 0; i < playersStates.Length; i++)
         {
             playersStates[i] = PlayerReadyState.notJoined;
             characterSelectPrompts[i].enabled = false;
+            playerTags[i].enabled = false;
             currentBlobIndexSelected[i] = -1;
             controlStickTimers[i] = 0.0f;
         }
@@ -65,15 +71,19 @@ public class CharacterSelect : MonoBehaviour
             //this is jank but basically it automatically reactivates the control stick selection when the stick is at rest
             if ((Input.GetAxis(StickHorizontalName) < 0.5f && (Input.GetAxis(StickHorizontalName) > -0.5f)))
                 controlStickTimers[i] = 1.0f;
-
+             
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////
             if (Input.GetButtonDown(AButtonName))
             {
                 if (playersStates[i] == PlayerReadyState.notJoined)
                 {
                     playersStates[i] = PlayerReadyState.joined;
 
-                    buttonPrompts[i].enabled = false;
+                    inactiveWindows[i].enabled = false;
                     characterSelectPrompts[i].enabled = true;
+                    characterSelectPrompts[i].GetComponent<Animator>().SetBool("isMoving", false);
+                    playerTags[i].enabled = true;
+                    buttonPrompts[i].enabled = false;
 
                     bool isValid = false;
                     int selectedIndex = currentBlobIndexSelected[i];
@@ -98,7 +108,7 @@ public class CharacterSelect : MonoBehaviour
                     Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
 
                     playerCharacterSelections[i].transform.position +=
-                        new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                        new Vector3(-9.0f + (2.0f * i + 0.95f) * 18.0f / 8.0f, 0.3f);
                 }
                 else if (playersStates[i] == PlayerReadyState.joined)
                 {
@@ -117,6 +127,9 @@ public class CharacterSelect : MonoBehaviour
                     currentBlobIndexSelected[i] = -1;
 
                     characterSelectPrompts[i].enabled = false;
+                    characterSelectPrompts[i].GetComponent<Animator>().SetBool("isMoving", true);
+                    playerTags[i].enabled = false;
+                    inactiveWindows[i].enabled = true;
                     buttonPrompts[i].enabled = true;
 
                     Destroy(playerCharacterSelections[i]);
@@ -157,11 +170,13 @@ public class CharacterSelect : MonoBehaviour
 
                 playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
                 Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
-                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 0.95f) * 18.0f / 8.0f, 0.3f);
+                playerCharacterSelections[i].transform.localScale = new Vector3(10.0f, 10.0f, 1.0f);
             }
             else if (Input.GetAxis(StickHorizontalName) < -0.5f && playersStates[i] == PlayerReadyState.joined &&
                      controlStickTimers[i] > controlStickResetTime)
             {
+                characterSelectPrompts[i].GetComponent<Animator>().SetBool("isShiftLeft", true);
                 controlStickTimers[i] = 0.0f;
 
                 Destroy(playerCharacterSelections[i]);
@@ -187,7 +202,7 @@ public class CharacterSelect : MonoBehaviour
 
                 playerCharacterSelections[i] = Instantiate(blobList[currentBlobIndexSelected[i]]);
                 Destroy(playerCharacterSelections[i].GetComponent<TestBlobMove>());
-                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 1.0f) * 18.0f / 8.0f, -1.5f);
+                playerCharacterSelections[i].transform.position += new Vector3(-9.0f + (2.0f * i + 0.95f) * 18.0f / 8.0f, 0.3f);
             }
         }
 
@@ -208,9 +223,11 @@ public class CharacterSelect : MonoBehaviour
             }
 
             if (!isAnyoneNotReady)
-                pressStartPrompt.enabled = true;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = true;
+
             else
-                pressStartPrompt.enabled = false;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
+
 
             if (Input.GetButtonDown("Start") && !isAnyoneNotReady)
             {
@@ -222,6 +239,10 @@ public class CharacterSelect : MonoBehaviour
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().playerNum = i;
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().gift = giftPrefab;
                         playerCharacterSelections[i].GetComponent<TestBlobMove>().gift.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
+
+                        playerCharacterSelections[i].GetComponent<TestBlobMove>().crown = crownPrefab;
+                        playerCharacterSelections[i].GetComponent<TestBlobMove>().crown.transform.localScale = new Vector3(0.3f, 0.3f, 1.0f);
+
                         DontDestroyOnLoad(playerCharacterSelections[i]);
                     }
                 }
@@ -229,6 +250,6 @@ public class CharacterSelect : MonoBehaviour
             }
         }
         else
-            pressStartPrompt.enabled = false;
+                pressStartPrompt.GetComponent<SpriteRenderer>().enabled = false;
     }
 }
